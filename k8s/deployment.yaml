@@ -17,10 +17,6 @@ spec:
           env:
             - name: TZ
               value: Asia/Seoul
-            - name: DATABASE_URL
-              value: jdbc:mariadb://mariadb:3306/krampoline
-            - name: ANOTHER_ENV_VAR  # 예시 추가 환경 변수
-              value: some_value
           resources:
             requests:
               memory: 1Gi
