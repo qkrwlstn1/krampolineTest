@@ -20,5 +20,5 @@ FROM openjdk:17-slim
 VOLUME /tmp
 COPY --from=build /app/build/libs/*.jar /app/
 
-ENTRYPOINT ["java", "-jar", "/app/your-project-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "/app/boot.jar"]
 EXPOSE 8080/tcp
