@@ -6,7 +6,6 @@ spec:
   selector:
     matchLabels:
       app: krampoline
-  replicas: 1
   template:
     metadata:
       labels:
@@ -16,9 +15,3 @@ spec:
         - name: krampoline
           # 여러분의 image 주소를 입력해주세요.
           image: krmp-d2hub-idock.9rum.cc/dev-test/repo_f49ab7db265e
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 8080
-          env:
-            - name: ENV_VARIABLE_NAME
-              value: "value"
