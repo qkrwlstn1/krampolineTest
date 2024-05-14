@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: krampoline
+spec:
+  selector:
+    matchLabels:
+      app: krampoline
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: krampoline
+    spec:
+      containers:
+        - name: krampoline
+          # 여러분의 image 주소를 입력해주세요.
+          image: krmp-d2hub-idock.9rum.cc/dev-test/repo_fe042187d7ab
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ENV_VARIABLE_NAME
+              value: "value"
