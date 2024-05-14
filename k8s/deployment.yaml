@@ -1,26 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello
+  name: backend
 spec:
   selector:
     matchLabels:
-      app: hello
-      tier: backend
-      track: stable
-  replicas: 3
+      app: backend
   template:
     metadata:
       labels:
-        app: hello
-        tier: backend
-        track: stable
+        app: backend
     spec:
       containers:
-        - name: hello
-          image: krmp-d2hub-idock.9rum.cc/dev-test/repo_743dffb7237
-          ports:
-            - name: http
-              containerPort: 8080
-          
-          
+        - name: backend
+          image: krmp-d2hub-idock.9rum.cc/dev-test/repo_743dffb7237:latest
+          env:
+            - name: TZ
+              value: Asia/Seoul
+            - name: DATABASE_URL
+              value: jdbc:mariadb://mariadb:3306/krampoline
+            - name: ANOTHER_ENV_VAR  # 예시 추가 환경 변수
+              value: some_value
+          resources:
+            requests:
+              memory: 1Gi
+          readinessProbe:
+            httpGet:
+              path: /api/test
+              port: 8080
