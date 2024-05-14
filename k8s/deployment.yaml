@@ -14,4 +14,4 @@ spec:
       containers:
         - name: krampoline
           # 여러분의 image 주소를 입력해주세요.
-          image: 024e628baaf8bfbbf1491d6fd2ba2476c52d94e17b19cf4c2c0ef3790e48b941
+          image: jinsu9605/test_v1.0:latest
