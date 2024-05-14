@@ -1,5 +1,24 @@
-FROM openjdk:17
-ARG JAR_FILE=build/libs/app.jar
-COPY ${JAR_FILE} ./app.jar
-ENV TZ=Asia/Seoul
-ENTRYPOINT ["java", "-jar", "./app.jar"]
+FROM openjdk:17-slim as build
+
+WORKDIR /app
+
+COPY . .
+
+RUN mkdir -p /root/.gradle
+RUN echo "systemProp.http.proxyHost=krmp-proxy.9rum.cc\nsystemProp.http.proxyPort=3128\nsystemProp.https.proxyHost=krmp-proxy.9rum.cc\nsystemProp.https.proxyPort=3128" > /root/.gradle/gradle.properties
+RUN chmod +x gradlew
+
+
+
+RUN ./gradlew build -x test
+
+
+# List output to verify
+RUN ls /app/build/libs/
+
+FROM openjdk:17-slim
+VOLUME /tmp
+COPY --from=build /app/build/libs/*.jar /app/
+
+ENTRYPOINT ["java", "-jar", "/app/your-project-0.0.1-SNAPSHOT.jar"]
+EXPOSE 8080/tcp
