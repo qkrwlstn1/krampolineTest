@@ -1,26 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: krampoline
 spec:
   selector:
     matchLabels:
-      app: backend
+      app: krampoline
   template:
     metadata:
       labels:
-        app: backend
+        app: krampoline
     spec:
       containers:
-        - name: backend
-          image: krmp-d2hub-idock.9rum.cc/dev-test/repo_743dffb7237:latest
-          env:
-            - name: TZ
-              value: Asia/Seoul
-          resources:
-            requests:
-              memory: 1Gi
-          readinessProbe:
-            httpGet:
-              path: /api/test
-              port: 8080
+        - name: krampoline
+          # 여러분의 image 주소를 입력해주세요.
+          image: krmp-d2hub-idock.9rum.cc/dev-test/repo_743dffb7237
