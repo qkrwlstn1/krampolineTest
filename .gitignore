@@ -1,37 +1,24 @@
-HELP.md
-.gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+FROM openjdk:17-slim as build
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
+WORKDIR /app
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+COPY . .
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
 
-### VS Code ###
-.vscode/
+
+RUN mkdir -p /root/.gradle
+RUN echo "systemProp.http.proxyHost=krmp-proxy.9rum.cc\nsystemProp.http.proxyPort=3128\nsystemProp.https.proxyHost=krmp-proxy.9rum.cc\nsystemProp.https.proxyPort=3128" > /root/.gradle/gradle.properties
+RUN chmod +x gradlew
+
+
+
+
+
+# List output to verify
+RUN ls /app/build/libs/
+
+FROM openjdk:17-slim
+ARG JAR_FILE=build/libs/item-service-0.0.1-SNAPSHOT.jar
+ADD ${JAR_FILE} docker-springboot.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/docker-springboot.jar"]
+EXPOSE 8080/tcp
