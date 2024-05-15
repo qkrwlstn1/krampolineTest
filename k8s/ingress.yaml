@@ -17,5 +17,5 @@ spec:
           - path: /
             pathType: Prefix
             backend:
-              serviceName: krampoline
+              serviceName: backend
               servicePort: 8080
